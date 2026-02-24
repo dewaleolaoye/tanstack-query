@@ -1,7 +1,24 @@
-import { useGetAllPosts } from "./posts.hooks";
+import { useState } from "react";
+import { useAddPost, useGetAllPosts } from "./posts.hooks";
 
 export const App = () => {
   const { data, isPending, isSuccess } = useGetAllPosts();
+
+  const { mutate, isPending: mutatePending } = useAddPost();
+
+  const [state, setState] = useState({
+    userId: 1,
+    title: "",
+    body: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setState((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = () => {
+    mutate(state);
+  };
 
   return (
     <div className='max-w-5xl mx-auto p-4'>
@@ -9,7 +26,7 @@ export const App = () => {
 
       {isSuccess && (
         <>
-          {data?.map(({ body, id, title, userId }) => {
+          {data?.slice(0, 5).map(({ body, id, title, userId }) => {
             return (
               <div key={id}>
                 <h1 className='text-2xl font-bold'>{title}</h1>
@@ -20,6 +37,18 @@ export const App = () => {
           })}
         </>
       )}
+
+      <div className='bg-gray-600 mt-8'>
+        <input name='title' value={state.title} onChange={handleChange} />
+        <br />
+        <br />
+        <input name='body' value={state.body} onChange={handleChange} />
+        <br />
+        <br />
+        <button onClick={handleSubmit} disabled={mutatePending}>
+          {mutatePending ? "Loading..." : "Add Post"}
+        </button>
+      </div>
     </div>
   );
 };
