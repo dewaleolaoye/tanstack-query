@@ -10,6 +10,7 @@ export const useGetAllPosts = () => {
   });
 };
 
+// POST, PUT, PATCH, DELETE
 export const useAddPost = () => {
   return useMutation({
     mutationFn: addPost,

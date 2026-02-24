@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { PostRO } from "./posts.interface";
+import type { PostDTO, PostRO } from "./posts.interface";
 
 const BASE_URL = "https://jsonplaceholder.typicode.com";
 
@@ -8,7 +8,8 @@ export const fetchAllPosts = async () => {
   return response.data;
 };
 
-export const addPost = async (_data: Omit<PostRO, "id">) => {
+export const addPost = async (_data: PostDTO) => {
+  // export const addPost = async (_data: Omit<PostRO, "id">) => {
   try {
     const response = (await axios.post(`${BASE_URL}/posts`, _data)) as {
       data: PostRO;

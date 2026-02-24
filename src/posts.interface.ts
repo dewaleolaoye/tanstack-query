@@ -4,3 +4,8 @@ export interface PostRO {
   title: string;
   body: string;
 }
+export interface PostDTO {
+  userId: number;
+  title: string;
+  body: string;
+}
