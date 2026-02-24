@@ -21,3 +21,23 @@ export const addPost = async (_data: PostDTO) => {
     throw error;
   }
 };
+
+export const updatePost = async ({
+  _data,
+  id,
+}: {
+  _data: Partial<PostDTO>;
+  id: string;
+}) => {
+  // export const addPost = async (_data: Omit<PostRO, "id">) => {
+  try {
+    const response = (await axios.patch(`${BASE_URL}/posts/${id}`, _data)) as {
+      data: PostRO;
+    };
+
+    return response.data;
+  } catch (error) {
+    console.error("Error updating post:", error);
+    throw error;
+  }
+};

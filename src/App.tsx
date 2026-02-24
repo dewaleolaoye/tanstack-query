@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { useAddPost, useGetAllPosts } from "./posts.hooks";
+import { useAddPost, useGetAllPosts, useUpdatePost } from "./posts.hooks";
 
 export const App = () => {
   const { data, isPending, isSuccess } = useGetAllPosts();
 
-  const { mutate, isPending: mutatePending } = useAddPost();
+  // const { mutate, isPending: mutatePending } = useAddPost();
+
+  const { mutate: updateMutate, isPending: updatePending } = useUpdatePost();
 
   const [state, setState] = useState({
     userId: 1,
@@ -17,7 +19,14 @@ export const App = () => {
   };
 
   const handleSubmit = () => {
-    mutate(state);
+    // mutate(state);
+    updateMutate({
+      id: "1",
+      _data: {
+        body: "We are learning Tanstack query",
+        title: "Tasnstack query",
+      },
+    });
   };
 
   return (
@@ -45,8 +54,8 @@ export const App = () => {
         <input name='body' value={state.body} onChange={handleChange} />
         <br />
         <br />
-        <button onClick={handleSubmit} disabled={mutatePending}>
-          {mutatePending ? "Loading..." : "Add Post"}
+        <button onClick={handleSubmit} disabled={updatePending}>
+          {updatePending ? "Loading..." : "Add Post"}
         </button>
       </div>
     </div>
