@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAddPost, useGetAllPosts, useUpdatePost } from "./posts.hooks";
+import { useGetAllPosts, useUpdatePost } from "./posts.hooks";
 
 export const App = () => {
   const { data, isPending, isSuccess } = useGetAllPosts();
